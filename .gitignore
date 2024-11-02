@@ -1,0 +1,7 @@
+node_modules
+.vscode
+.idea
+.env
+dist
+firebase.config.ts
+*.db

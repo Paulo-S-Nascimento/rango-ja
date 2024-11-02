@@ -1,0 +1,22 @@
+@baseUrl = http://localhost:3000/food/v1
+
+
+
+
+# POST {{baseUrl}}/food
+# Content-Type: application/json
+
+# {
+#     "name": "k",
+#     "type": "hamburger",
+#     "price": 2
+# };
+
+# GET {{baseUrl}}/food
+# Content-Type: application/json
+
+ DELETE {{baseUrl}}/food/-OAeYg_5jQxsXSuKkrwI
+
+
+
+
