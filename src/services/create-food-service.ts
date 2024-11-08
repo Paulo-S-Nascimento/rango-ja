@@ -8,11 +8,11 @@ export class CreateFoodService {
         this.foodRepository = new FoodRepository()
     };
 
-    public async exec(name: string, type: string, price: number, imageUrl?: string): Promise<Food> {
+    public async exec(name: string, type: string, price: number, description?: string, imageUrl?: string): Promise<Food> {
         this.validate(name, type, price);
     
         // Cria um alimento com nome, tipo, preço e imagem (caso fornecida)
-        let food = await this.foodRepository.create(name, type, price, imageUrl);
+        let food = await this.foodRepository.create(name, type, price, description, imageUrl);
         
         return food
     };

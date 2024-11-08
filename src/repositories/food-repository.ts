@@ -2,18 +2,19 @@ import { Food } from '../models/food-model';
 
 // Firebase
 import { db } from '../firebase.config'; 
-import { ref, push, get, child, remove } from 'firebase/database';
+import { ref, push, get, child, remove, update } from 'firebase/database';
 
 
 export class FoodRepository {
     private foodRef = ref(db, 'foods');
 
     // Cria um novo alimento
-    public async create(name: string, type: string, price: number, imageUrl?: string): Promise<Food> {
+    public async create(name: string, type: string, price: number, description?: string, imageUrl?: string): Promise<Food> {
         const newFood: Omit<Food, 'id'> = { 
             name,
             type,
             price,
+            description: description || '', 
             imageUrl: imageUrl || '', 
         };
     
@@ -27,7 +28,7 @@ export class FoodRepository {
             console.error('Erro ao salvar no banco de dados:', error);
             throw new Error('Erro ao salvar no banco de dados');
         }
-    }
+    };
     
     // Lista todos os alimentos
     public async listAll(): Promise<Food[]> {
@@ -63,13 +64,12 @@ export class FoodRepository {
             } else {
                 return null;
             }
-            
+    
         } catch (error) {
             console.error('Erro ao buscar o alimento pelo ID:', error);
             throw new Error('Erro ao buscar o alimento pelo ID');
         }
-    }
-
+    };
     // Deleta um alimento
     public async delete(id: string): Promise<void> {
         try {
@@ -82,5 +82,18 @@ export class FoodRepository {
             console.error('Erro ao deletar o alimento:', error);
             throw new Error('Erro ao deletar o alimento');
          }
-    }  
+    };
+
+    // Atualiza um alimento
+    public async update(id: string, options: Partial<Food>): Promise<Food> {
+        const foodItemRef = child(this.foodRef, id);
+    
+       
+        const updatedFields = Object.fromEntries(
+            Object.entries(options).filter(([_, value]) => value !== undefined)
+        );
+    
+        await update(foodItemRef, updatedFields);
+        return { ...options, id } as Food;
+    }
 }

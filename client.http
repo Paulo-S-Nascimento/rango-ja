@@ -1,21 +1,25 @@
 @baseUrl = http://localhost:3000/food/v1
 
 
+GET {{baseUrl}}/food/
+Content-Type: application/json
 
+{
+    "name": "X-NADA DUPLO",
+    "price": 25.50,
+    "type": "HAMBURGUER",
+    "description": "3 kg de carne moída (escolha uma carne magra e macia)",
+    "imageUrl": "https://www.typescriptlang.org/pt/docs/handbook/utility-types.html"
+}
 
-# POST {{baseUrl}}/food
-# Content-Type: application/json
-
-# {
-#     "name": "k",
-#     "type": "hamburger",
-#     "price": 2
-# };
+#
 
 # GET {{baseUrl}}/food
-# Content-Type: application/json
+#  Content-Type: application/json
 
- DELETE {{baseUrl}}/food/-OAeYg_5jQxsXSuKkrwI
+# #
+
+#  DELETE {{baseUrl}}/food/-OAeYg_5jQxsXSuKkrwI
 
 
 

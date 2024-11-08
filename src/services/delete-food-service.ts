@@ -8,6 +8,7 @@ export class DeleteFoodService {
         this.foodRepository = new FoodRepository();
     }
 
+    // Deleta um alimento pelo id
     public async exec(id: string): Promise<void> {
         const existingFood = await this.foodRepository.getById(id);
 
