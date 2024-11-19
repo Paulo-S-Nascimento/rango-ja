@@ -6,25 +6,34 @@ import { DeleteFoodService } from '../services/delete-food-service';
 import { ListFoodService } from '../services/list-food-service';
 import { UpdateFoodService } from '../services/update-food-service';
 import { DetailFoodService } from '../services/detail-food-service';
+import { UploadFoodImageService } from '../services/upload-food-image-service';
 
 export class FoodController { 
 
     // POST /food
     // Cria um novo alimento
     public async create(req: Request, res: Response): Promise<void> {
-        try {
-          const { name, type, price, description, imageUrl } = req.body;
+      try {
+          const { name, type, price, description } = req.body;
+          const file = req.file; 
+          let imageUrl: string | undefined;
+
+        
+          if (file) {
+              const uploadService = new UploadFoodImageService();
+              const fileName = `food_${Date.now()}_${file.originalname}`; 
+              imageUrl = await uploadService.exec(file.buffer, fileName);
+          }
 
           const createFoodService = new CreateFoodService();
           const food = await createFoodService.exec(name, type, price, description, imageUrl);
 
           res.status(201).json(food);
-
-        } catch (error) {
-
-          res.status(500).json({ error: 'Erro ao criar alimento' })
-        };
-      };
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Erro ao criar alimento' });
+      }
+    };
 
     // GET /food
     // Lista todos os alimentos
@@ -45,7 +54,7 @@ export class FoodController {
           const { id } = req.params;
           const deleteFoodService = new DeleteFoodService();
           await deleteFoodService.exec(id);
-          res.status(204).send({'message': 'Alimento deletado com sucesso'});
+          res.status(204).send({'message': 'Alimento Deletado'});
         } catch (error) {
           res.status(500).json({ error: 'Erro ao deletar alimento' });
         }
@@ -77,4 +86,26 @@ export class FoodController {
         (res as Response).status(404).json({ "error": "Alimento não encontrado" });
       }
     }    
- }
+
+    // POST /upload-image
+    public async uploadImage(req: Request, res: Response): Promise<void> {
+      try {
+          const file = req.file; 
+          
+          if (!file) {
+              res.status(400).json({ error: 'Por favor, insira uma imagem.' });
+              return;
+          }
+
+          const uploadService = new UploadFoodImageService();
+          const fileName = `food_${Date.now()}_${file.originalname}`; 
+          const imageUrl = await uploadService.exec(file.buffer, fileName);
+
+          res.status(201).json({ imageUrl });
+      } catch (error: any) {
+          console.error(error);
+          res.status(500).json({ error: error.message || 'Erro ao fazer upload da imagem.' });
+      }
+  }
+}
+

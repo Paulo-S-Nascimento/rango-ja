@@ -4,4 +4,5 @@ node_modules
 .env
 dist
 firebase.config.ts
+supabase.config.ts
 *.db
