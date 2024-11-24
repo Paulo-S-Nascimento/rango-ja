@@ -7,6 +7,7 @@ import { ListFoodService } from '../services/list-food-service';
 import { UpdateFoodService } from '../services/update-food-service';
 import { DetailFoodService } from '../services/detail-food-service';
 import { UploadFoodImageService } from '../services/upload-food-image-service';
+import { ListFoodByTypeService } from '../services/type-food-service';
 
 export class FoodController { 
 
@@ -87,7 +88,20 @@ export class FoodController {
       } catch (error) {
         (res as Response).status(404).json({ "error": "Alimento não encontrado" });
       }
-    }    
+    }  
+    
+    // GET /food/type/:type
+    public async listByType(req: Request, res: Response): Promise<void> { 
+    try { 
+    const { type } = req.params; 
+    const listFoodByTypeService = new ListFoodByTypeService(); 
+    const food = await listFoodByTypeService.exec(type); 
+    res.status(200).json(food); 
+     } 
+    catch (error){ 
+    res.status(500).json({ error: 'Erro ao listar alimentos por tipo' }); 
+    } 
+  }
 
 //     // POST /upload-image
 //     public async uploadImage(req: Request, res: Response): Promise<void> {

@@ -11,6 +11,7 @@ routes.delete('/food/:id', foodController.delete);
 routes.put('/food/:id', foodController.update);
 routes.get('/food/:id', foodController.detail);
 routes.post('/food', upload.single('image'), foodController.create.bind(foodController));
+routes.get('/food/type/:type', foodController.listByType.bind(foodController));
 
 
 export { routes };

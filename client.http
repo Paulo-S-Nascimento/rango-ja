@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3000/food/v1
 
 
-GET {{baseUrl}}/food/
+GET {{baseUrl}}/food/type/HAMBURGUER
 Content-Type: application/json
 
 {
@@ -11,6 +11,8 @@ Content-Type: application/json
     "description": "3 kg de carne moída (escolha uma carne magra e macia)",
     "imageUrl": "https://www.typescriptlang.org/pt/docs/handbook/utility-types.html"
 }
+
+
 
 #
 

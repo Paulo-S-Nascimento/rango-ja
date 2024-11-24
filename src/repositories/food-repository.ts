@@ -96,4 +96,28 @@ export class FoodRepository {
         await update(foodItemRef, updatedFields);
         return { ...options, id } as Food;
     }
-}
+
+    // Lista alimentos por tipo
+    public async findByType(type: string): Promise<Food[]> { 
+    try { 
+        const snapshot = await get(this.foodRef); 
+       
+    if (snapshot.exists()) { 
+      const data: Food[] = []; 
+
+    snapshot.forEach((childSnapshot) => { 
+    const food = childSnapshot.val(); 
+
+      if (food.type === type) {''; data.push(food); } }); 
+      return data; 
+    } 
+
+      return []; 
+    } 
+      catch (error) { 
+      console.error('Erro ao listar alimentos por tipo:', error); 
+      throw new Error('Erro ao listar alimentos por tipo'); 
+    }
+     }
+   }
+
