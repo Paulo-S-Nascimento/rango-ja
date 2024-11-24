@@ -3,6 +3,4 @@ node_modules
 .idea
 .env
 dist
-firebase.config.ts
-supabase.config.ts
 *.db
