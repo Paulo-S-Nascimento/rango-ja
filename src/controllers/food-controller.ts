@@ -13,6 +13,7 @@ export class FoodController {
     // POST /food
     // Cria um novo alimento
     public async create(req: Request, res: Response): Promise<void> {
+      console.log(req.file);
       
       try {
           const { name, type, price, description } = req.body;

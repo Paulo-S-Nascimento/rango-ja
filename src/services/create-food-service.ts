@@ -24,6 +24,7 @@ export class CreateFoodService {
         if (!type) throw new Error('Insira um tipo');
         if (!price) throw new Error('Insira um preço')
     };
+
 }
 
 
